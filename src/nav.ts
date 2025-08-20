@@ -17,6 +17,7 @@ export const nav = $('<nav/>')
 		formatButton('B', 'font-bold', '<b>bold</b>'),
 		formatButton('I', 'italic', '<i>italic</i>'),
 		formatButton('S', 'line-through', '<s>strike through</s>'),
+		formatButton('A', 'text-[blue] underline', '<a href="https://www.example.com">Link</a>'),
 		formatButton('code', 'font-mono text-sm', '<code>code</code>'),
 		$('<button/>')
 			.text('Save')
