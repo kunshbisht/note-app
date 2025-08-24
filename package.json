@@ -1,5 +1,5 @@
 {
-  "name": "note-app2",
+  "name": "note-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,14 +9,13 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.32",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^3.4.17",
+    "@tailwindcss/vite": "^4.1.12",
+    "@types/jquery": "^3.5.33",
     "typescript": "~5.8.3",
     "vite": "^7.1.0"
   },
   "dependencies": {
-    "jquery": "^3.7.1"
+    "jquery": "^3.7.1",
+    "tailwindcss": "^4.1.12"
   }
 }

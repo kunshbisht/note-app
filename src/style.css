@@ -1,17 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-* {
-	font-family: 'Noto Sans', sans-serif;
+[data-format="h1"] {
+	@apply text-4xl font-bold;
 }
 
-hr { border-color: black; }
+[data-format="h2"] {
+	@apply text-3xl font-bold;
+}
 
-a {
-	color: blue;
-	text-decoration: underline;
-	cursor: pointer;
+[data-format="h3"] {
+	@apply text-2xl font-bold;
+}
+
+[data-format="h4"] {
+	@apply text-xl font-bold;
+}
+
+[data-format="h5"] {
+	@apply text-lg font-semibold;
 }
