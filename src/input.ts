@@ -11,13 +11,39 @@ export function format(e: Event): void {
 		['### ', 'h3'],
 		['#### ', 'h4'],
 		['##### ', 'h5'],
-		['= ', 'text'],
+		['= ', 'text']
 	];
 
 	for (const [pre, fmt] of rules) {
 		if (t.value.startsWith(pre)) {
 			$t.attr('data-format', fmt).val(t.value.slice(pre.length));
 			break;
+		}
+	}
+
+	if (t.value.startsWith('2c ')) {
+		t.value = t.value.slice(3);
+
+		// If input is already inside a row, do nothing
+		if ($t.closest('.row').length === 0) {
+			const $row = $('<div>').addClass('row flex gap-4'); // flex container
+			const $col1 = $('<div>').addClass('col flex-1');
+			const $col2 = $('<div>').addClass('col flex-1');
+
+			// Insert row after current input
+			$t.after($row);
+
+			// Move current input into first column
+			$col1.append($t);
+			$row.append($col1);
+
+			// Add a new input in the second column
+			const $newInput = input();
+			$col2.append($newInput);
+			$row.append($col2);
+
+			// Focus the new input
+			$t.trigger('focus');
 		}
 	}
 }
@@ -42,8 +68,8 @@ export function onKeyDown(e: JQuery.KeyDownEvent) {
 	const $target = $(e.target)
 	if (e.key === 'Enter') {
 		const $new = input('Write anything');
-		$target.after($new);   // insert after current
-		$new.trigger('focus');     // focus the new one
+		$target.after($new);
+		$new.trigger('focus');
 	} else if (e.key === 'ArrowDown') {
 		$target.next().trigger('focus')
 	} else if (e.key === 'ArrowUp') {

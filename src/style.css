@@ -19,3 +19,14 @@
 [data-format="h5"] {
 	@apply text-lg font-semibold;
 }
+
+.row {
+	display: flex;
+	gap: 1rem; /* space between columns */
+}
+
+.col {
+	flex: 1; /* equal width columns */
+	display: flex;
+	flex-direction: column;
+}
