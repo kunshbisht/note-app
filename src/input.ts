@@ -59,7 +59,6 @@ export function deleteInput(e: JQuery.KeyDownEvent) {
 		target.selectionEnd === 0
 	) {
 		e.preventDefault();
-		console.log($t, $t.parent())
 		const $prev = $t.prev('input');
 		$t.remove();
 		cleanup()

@@ -1,14 +1,14 @@
 import $ from 'jquery';
 
 export type contentType = {
-	'data-format': string;
-	value: string | contentType[];
+    'data-format': string;
+    value: string | contentType[];
 }
 
 function jq2AST(el: JQuery<HTMLElement> | HTMLElement): contentType {
     if (el instanceof HTMLElement) {
         return jq2AST($(el));
-    } else if (el.prop('tagName')?.toLowerCase() === 'input') {
+    } else if (el.is('input')) {
         return {
             'data-format': el.attr('data-format') || 'text',
             'value': (el.val() as string) || ''
@@ -19,23 +19,27 @@ function jq2AST(el: JQuery<HTMLElement> | HTMLElement): contentType {
             'value': el.children('div.col').get().map(jq2AST)
         };
     } else if (el.hasClass('col')) {
-		return {
+        return {
             'data-format': 'col',
             'value': el.children('input').get().map(jq2AST)
         };
-	}
-	console.log(el)
+    } else if (el.is('img')) {
+        return {
+            'data-format': 'preview',
+            'value': el.attr('src') || ''
+        };
+    }
     return { 'data-format': '', value: '' };
 }
 
 export function saveNote() {
-	const title = $('#title').val() as string;
+    const title = $('#title').val() as string;
 
-	const content: contentType[] = $('body')
-		.children('input:not(#title), div.row, div.col')
-		.get().map(jq2AST)
+    const content: contentType[] = $('body')
+        .children('input:not(#title), div.row, div.col, img')
+        .get().map(jq2AST)
 
-	localStorage.setItem('note', JSON.stringify({ title, content }));
+    localStorage.setItem('note', JSON.stringify({ title, content }));
 }
 
 export function getNote(): { title: string; content: contentType[] } {

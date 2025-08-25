@@ -31,6 +31,7 @@ input[data-format="list"] {
     background-repeat: no-repeat;
     background-position: calc(-50vw + 2rem) center;
 }
+
 .row {
 	display: flex;
 	gap: 1rem; /* space between columns */
@@ -40,4 +41,14 @@ input[data-format="list"] {
 	flex: 1; /* equal width columns */
 	display: flex;
 	flex-direction: column;
+}
+
+img {
+	align-self: flex-start;
+	height: 6rem;
+	@apply rounded border;
+}
+
+img + img {
+	margin-top: 0.5em;
 }

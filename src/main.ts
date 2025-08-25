@@ -1,7 +1,12 @@
+import enableImageDrop from './enableImageDrop';
 import input, { deleteInput, format } from './input';
 import { getNote, saveNote, type contentType } from './saveNote';
 import './style.css'
 import $ from 'jquery';
+
+$(document).on('dragover dragenter drop', (e) => {
+  e.preventDefault();
+});
 
 $('body')
   .addClass('p-4 h-screen flex flex-col')
@@ -10,6 +15,22 @@ $('body')
     input().appendTo('body').trigger('focus')
     saveNote()
   })
+
+enableImageDrop($('body'), (url) => {
+  console.log('Dropped image URL:', url);
+
+  const $preview = $('<img>');
+  $preview
+    .attr('data-format', 'preview')
+    .attr('src', url)
+    .on('contextmenu', e => {
+      e.preventDefault()
+      $preview.remove()
+      saveNote()
+    })
+    .appendTo('body');
+  saveNote()
+});
 
 if (!localStorage.getItem('show')) {
   $('<div/>')
@@ -25,10 +46,12 @@ if (!localStorage.getItem('show')) {
           '<code>#### Heading 4</code>',
           '<code>##### Heading 5</code>',
           '<code>= Regular</code>',
-          '<code>* Regular</code>',
+          '<code>* List</code>',
           '<code>2c Columns (2)</code>',
           '<code>3c Columns (3)</code>',
           '<code>4c Columns (4)</code>',
+          '<code>4c Columns (4)</code>',
+          '<code>Drop online image to load preview (beta)</code>',
           $('<button/>')
             .text('x')
             .addClass('absolute right-2 top-2 bg-red-500 rounded w-6')
@@ -42,7 +65,6 @@ if (!localStorage.getItem('show')) {
 }
 
 const note = getNote();
-console.log(note);
 
 // Title input
 input('py-4 rounded-lg text-5xl font-bold', {
@@ -58,6 +80,19 @@ input('py-4 rounded-lg text-5xl font-bold', {
 // Restore content
 note.content.forEach(el => {
   // Simple text input
+  if (el['data-format'] === 'preview' && typeof el.value === 'string') {
+    $('<img>')
+      .attr('data-format', 'preview')
+      .attr('src', el.value)
+      .on('contextmenu', function (e) {
+        e.preventDefault()
+        $(this).remove()
+        saveNote()
+      })
+      .appendTo('body');
+    return;
+  }
+
   if (typeof el.value === 'string') {
     input()
       .attr('data-format', el['data-format'])
