@@ -20,6 +20,17 @@
 	@apply text-lg font-semibold;
 }
 
+input[data-format="list"] {
+	position: relative;
+    display: block;
+    padding-left: 2em !important;
+    border: none;
+    outline: none;
+    background: transparent;
+    background-image: radial-gradient(circle, black 0.25em, transparent 0.25em);
+    background-repeat: no-repeat;
+    background-position: calc(-50vw + 2rem) center;
+}
 .row {
 	display: flex;
 	gap: 1rem; /* space between columns */

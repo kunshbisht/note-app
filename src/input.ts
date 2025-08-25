@@ -43,6 +43,7 @@ export function format(e: Event): void {
 				$col1.append($t);
 				$row.children().filter((_, el) => $(el).is(':empty')).append(input());
 				$t.trigger('focus');
+				saveNote()
 			}
 		}
 	}
@@ -69,9 +70,12 @@ export function deleteInput(e: JQuery.KeyDownEvent) {
 export function onKeyDown(e: JQuery.KeyDownEvent) {
 	const $target = $(e.target)
 	if (e.key === 'Enter') {
-		const $new = input('Write anything');
+		const $new = input('', {placeholder: 'Write anything'});
+		if ($target.attr('data-format') === 'list')
+			$new.attr('data-format', 'list')
 		$target.after($new);
 		$new.trigger('focus');
+		saveNote()
 	} else if (e.key === 'ArrowDown') {
 		$target.next().trigger('focus')
 	} else if (e.key === 'ArrowUp') {

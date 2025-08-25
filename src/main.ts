@@ -1,5 +1,5 @@
 import input, { deleteInput, format } from './input';
-import { getNote, type contentType } from './saveNote';
+import { getNote, saveNote, type contentType } from './saveNote';
 import './style.css'
 import $ from 'jquery';
 
@@ -8,6 +8,7 @@ $('body')
   .on('dblclick', e => {
     if (e.target !== e.currentTarget) return
     input().appendTo('body').trigger('focus')
+    saveNote()
   })
 
 if (!localStorage.getItem('show')) {
@@ -24,7 +25,10 @@ if (!localStorage.getItem('show')) {
           '<code>#### Heading 4</code>',
           '<code>##### Heading 5</code>',
           '<code>= Regular</code>',
-          '<code>2c Columns</code>',
+          '<code>* Regular</code>',
+          '<code>2c Columns (2)</code>',
+          '<code>3c Columns (3)</code>',
+          '<code>4c Columns (4)</code>',
           $('<button/>')
             .text('x')
             .addClass('absolute right-2 top-2 bg-red-500 rounded w-6')
@@ -88,4 +92,5 @@ note.content.forEach(el => {
 // If content empty, add one input
 if (!note.content.length) {
   input().appendTo('body');
+  saveNote()
 }
