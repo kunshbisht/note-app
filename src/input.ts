@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import { saveNote } from './saveNote';
+import { cleanup } from './cleanup';
 
 export function format(e: Event): void {
 	const t = e.target as HTMLInputElement; // cast to input
@@ -11,7 +12,8 @@ export function format(e: Event): void {
 		['### ', 'h3'],
 		['#### ', 'h4'],
 		['##### ', 'h5'],
-		['= ', 'text']
+		['= ', 'text'],
+		['* ', 'list'],
 	];
 
 	for (const [pre, fmt] of rules) {
@@ -21,29 +23,27 @@ export function format(e: Event): void {
 		}
 	}
 
-	if (t.value.startsWith('2c ')) {
-		t.value = t.value.slice(3);
+	const colRules: [string, number][] = [
+		['2c ', 2],
+		['3c ', 3],
+		['4c ', 4]
+	]
 
-		// If input is already inside a row, do nothing
-		if ($t.closest('.row').length === 0) {
-			const $row = $('<div>').addClass('row flex gap-4'); // flex container
-			const $col1 = $('<div>').addClass('col flex-1');
-			const $col2 = $('<div>').addClass('col flex-1');
+	for (const rule of colRules) {
+		if (t.value.startsWith(rule[0])) {
+			t.value = t.value.slice(rule[0].length);
+			if ($t.closest('.row').length === 0) {
+				const $row = $('<div>').addClass('row')
+				const $col1 = $('<div>').addClass('col').appendTo($row)
+				for (let i = 1; i < rule[1]; i++) {
+					$('<div>').addClass('col').appendTo($row)
+				}
 
-			// Insert row after current input
-			$t.after($row);
-
-			// Move current input into first column
-			$col1.append($t);
-			$row.append($col1);
-
-			// Add a new input in the second column
-			const $newInput = input();
-			$col2.append($newInput);
-			$row.append($col2);
-
-			// Focus the new input
-			$t.trigger('focus');
+				$t.after($row);
+				$col1.append($t);
+				$row.children().filter((_, el) => $(el).is(':empty')).append(input());
+				$t.trigger('focus');
+			}
 		}
 	}
 }
@@ -58,8 +58,10 @@ export function deleteInput(e: JQuery.KeyDownEvent) {
 		target.selectionEnd === 0
 	) {
 		e.preventDefault();
+		console.log($t, $t.parent())
 		const $prev = $t.prev('input');
 		$t.remove();
+		cleanup()
 		if ($prev.length) $prev.trigger('focus');
 	}
 }

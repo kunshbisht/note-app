@@ -53,22 +53,37 @@ input('py-4 rounded-lg text-5xl font-bold', {
 
 // Restore content
 note.content.forEach(el => {
+  // Simple text input
   if (typeof el.value === 'string') {
-    input().attr('data-format', el['data-format']).val(el.value).appendTo('body');
-  } else if (el['data-format'] === 'cols') {
-    const row = $('<div>').addClass('row');
+    input()
+      .attr('data-format', el['data-format'])
+      .val(el.value)
+      .appendTo('body');
+    return;
+  }
+
+  // Handle "cols" format
+  if (el['data-format'] === 'cols') {
+    const $row = $('<div>').addClass('row');
+
     el.value.forEach(col => {
-      const $col = $('<div>').addClass('col').appendTo(row);
+      const $col = $('<div>').addClass('col').appendTo($row);
+
+      // Add string children to column
       (col.value as contentType[])
         .filter(child => typeof child.value === 'string')
-        .forEach(child =>
-          input().attr('data-format', child['data-format']).val(child.value as string).appendTo($col)
-        );
+        .forEach(child => {
+          input()
+            .attr('data-format', child['data-format'])
+            .val(child.value as string)
+            .appendTo($col);
+        });
     });
-    $('body').append(row);
+
+    // Add row to the document
+    $('body').append($row);
   }
 });
-
 
 // If content empty, add one input
 if (!note.content.length) {
