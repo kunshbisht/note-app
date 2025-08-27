@@ -1,6 +1,7 @@
+import input from "../ui/input";
+import { cleanup } from "./cleanup";
+import { saveNote } from "./note";
 import $ from 'jquery';
-import { saveNote } from './saveNote';
-import { cleanup } from './cleanup';
 
 export function format(e: Event): void {
 	const t = e.target as HTMLInputElement; // cast to input
@@ -69,7 +70,7 @@ export function deleteInput(e: JQuery.KeyDownEvent) {
 export function onKeyDown(e: JQuery.KeyDownEvent) {
 	const $target = $(e.target)
 	if (e.key === 'Enter') {
-		const $new = input('', {placeholder: 'Write anything'});
+		const $new = input('', { placeholder: 'Write anything' });
 		if ($target.attr('data-format') === 'list')
 			$new.attr('data-format', 'list')
 		$target.after($new);
@@ -80,17 +81,4 @@ export function onKeyDown(e: JQuery.KeyDownEvent) {
 	} else if (e.key === 'ArrowUp') {
 		$target.prev().trigger('focus')
 	}
-}
-
-export default function input(
-	className = '',
-	attrs: Record<string, any> = {}
-): JQuery<HTMLInputElement> {
-	return $('<input>', { type: 'text', ...attrs })
-		.attr('placeholder', (_, str) => str || 'Write anything')
-		.on('keydown', onKeyDown)
-		.on('keydown', deleteInput)
-		.on('input', format)
-		.on('input', saveNote)
-		.addClass(`outline-none p-2 ${className}`.trim()) as JQuery<HTMLInputElement>;
 }

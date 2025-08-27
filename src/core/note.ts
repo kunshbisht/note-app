@@ -1,11 +1,7 @@
+import type { ContentType } from "../types/note";
 import $ from 'jquery';
 
-export type contentType = {
-    'data-format': string;
-    value: string | contentType[];
-}
-
-function jq2AST(el: JQuery<HTMLElement> | HTMLElement): contentType {
+function jq2AST(el: JQuery<HTMLElement> | HTMLElement): ContentType {
     if (el instanceof HTMLElement) {
         return jq2AST($(el));
     } else if (el.is('input')) {
@@ -35,14 +31,14 @@ function jq2AST(el: JQuery<HTMLElement> | HTMLElement): contentType {
 export function saveNote() {
     const title = $('#title').val() as string;
 
-    const content: contentType[] = $('body')
+    const content: ContentType[] = $('body')
         .children('input:not(#title), div.row, div.col, img')
         .get().map(jq2AST)
 
     localStorage.setItem('note', JSON.stringify({ title, content }));
 }
 
-export function getNote(): { title: string; content: contentType[] } {
+export function getNote(): { title: string; content: ContentType[] } {
     const data = localStorage.getItem('note');
     if (!data) return { title: '', content: [] };
 

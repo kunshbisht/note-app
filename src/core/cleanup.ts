@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { saveNote } from './saveNote';
+import { saveNote } from './note';
 
 export function cleanup($el: JQuery = $('body')) {
 	$el.find('.col:empty').remove();

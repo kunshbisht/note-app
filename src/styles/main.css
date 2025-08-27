@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+	@apply p-4 h-screen flex flex-col;
+}
+
 [data-format="h1"] {
 	@apply text-4xl font-bold;
 }
