@@ -15,6 +15,9 @@ export function format(e: Event): void {
 		['##### ', 'h5'],
 		['= ', 'text'],
 		['* ', 'list'],
+		['!! ', 'bold'],
+		['// ', 'italic'],
+		['~~ ', 'dim']
 	];
 
 	for (const [pre, fmt] of rules) {

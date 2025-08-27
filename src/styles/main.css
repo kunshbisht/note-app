@@ -24,6 +24,18 @@ body {
 	@apply text-lg font-semibold;
 }
 
+[data-format="bold"] {
+	@apply font-bold;
+}
+
+[data-format="italic"] {
+	@apply italic;
+}
+
+[data-format="dim"] {
+	@apply opacity-50;
+}
+
 input[data-format="list"] {
 	position: relative;
     display: block;

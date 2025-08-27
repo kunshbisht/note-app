@@ -10,7 +10,7 @@ import { saveNote } from './core/note';
 import { enableBackgroundInput } from './ui/background';
 
 // Make input on double click
-enableBackgroundInput
+enableBackgroundInput()
 
 // Prevent default browser drag/drop
 $(document).on('dragover dragenter drop', e => e.preventDefault());

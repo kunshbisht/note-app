@@ -1,35 +1,46 @@
 import $ from 'jquery';
 
 export function initSnippets() {
-	if (!localStorage.getItem('show')) {
-		$('<div/>')
-			.addClass('absolute inset-0 bg-black/30 backdrop-blur flex items-center justify-center')
-			.append(
-				$('<div/>')
-					.addClass('bg-white w-fit p-4 rounded-xl relative flex flex-col shadow-lg')
-					.append(
-						'<b class="text-2xl">Snippets</b>',
-						'<code># Heading 1</code>',
-						'<code>## Heading 2</code>',
-						'<code>### Heading 3</code>',
-						'<code>#### Heading 4</code>',
-						'<code>##### Heading 5</code>',
-						'<code>= Regular</code>',
-						'<code>* List</code>',
-						'<code>2c Columns (2)</code>',
-						'<code>3c Columns (3)</code>',
-						'<code>4c Columns (4)</code>',
-						'<code>4c Columns (4)</code>',
-						'<code>Drop online image to load preview (beta)</code>',
-						$('<button/>')
-							.text('x')
-							.addClass('absolute right-2 top-2 bg-red-500 rounded w-6')
-							.on('click', e => {
-								localStorage.setItem('show', 'true')
-								$(e.target).parent().parent().remove()
-							})
-					)
-			)
-			.appendTo('body')
-	}
+	if (localStorage.getItem('show')) return;
+
+	const snippets = [
+		'# Heading 1',
+		'## Heading 2',
+		'### Heading 3',
+		'#### Heading 4',
+		'##### Heading 5',
+		'= Regular',
+		'* List',
+		'!! Bold',
+		'// italic',
+		'~~ Hush',
+		'2c Columns (2)',
+		'3c Columns (3)',
+		'4c Columns (4)',
+		'Drop online image to load preview (beta)',
+	];
+
+	const overlay = $('<div/>')
+		.addClass('absolute inset-0 bg-black/30 backdrop-blur flex items-center justify-center');
+
+	const container = $('<div/>')
+		.addClass('bg-white w-fit p-4 rounded-xl relative flex flex-col shadow-lg');
+
+	// Add title
+	container.append('<b class="text-2xl mb-2">Snippets</b>');
+
+	// Add code snippets
+	snippets.forEach(snippet => container.append(`<code>${snippet}</code>`));
+
+	// Close button
+	const closeBtn = $('<button/>')
+		.text('x')
+		.addClass('absolute right-2 top-2 bg-red-500 rounded w-6 h-6 flex items-center justify-center text-white font-bold')
+		.on('click', () => {
+			localStorage.setItem('show', 'true');
+			overlay.remove();
+		});
+
+	container.append(closeBtn);
+	overlay.append(container).appendTo('body');
 }
