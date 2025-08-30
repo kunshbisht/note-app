@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
-body {
-	@apply p-4 h-screen flex flex-col;
+nav img {
+	height: 2rem;
+	border: none;
+	align-self: center;
 }
 
 [data-format="h1"] {

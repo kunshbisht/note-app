@@ -1,12 +1,29 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/note.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Notes</title>
-  </head>
-  <body>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/note.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notes</title>
+</head>
+
+<body class="*:p-8 *:overflow-scroll overflow-hidden h-screen flex">
+  <div id="nav" class="flex flex-col bg-indigo-500 gap-2 *:text-white">
+    <h1 class="p-2 text-3xl font-bold">Note app</h1>
+    <nav class="flex flex-col *:transition-colors *:p-2 *:rounded-lg *:hover:bg-white/30 *:flex *:items-center *:gap-2">
+      <a href="#">
+        <img src="home.svg">
+        Home
+      </a>
+      <a href="#editor">
+        <img src="edit.svg">
+        Editor
+      </a>
+    </nav>
+  </div>
+  <div id="app" class="flex-1 flex flex-col"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>

@@ -18,7 +18,7 @@ export function restoreNote(note: {
 					$(this).remove()
 					saveNote()
 				})
-				.appendTo('body');
+				.appendTo('#app');
 			return;
 		}
 
@@ -26,7 +26,7 @@ export function restoreNote(note: {
 			input()
 				.attr('data-format', el['data-format'])
 				.val(el.value)
-				.appendTo('body');
+				.appendTo('#app');
 			return;
 		}
 
@@ -49,13 +49,13 @@ export function restoreNote(note: {
 			});
 
 			// Add row to the document
-			$('body').append($row);
+			$('#app').append($row);
 		}
 	});
 
 	// If content empty, add one input
 	if (!note.content.length) {
-		input().appendTo('body');
+		input().appendTo('#app');
 		saveNote()
 	}
 }

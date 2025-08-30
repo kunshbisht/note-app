@@ -42,5 +42,5 @@ export function initSnippets() {
 		});
 
 	container.append(closeBtn);
-	overlay.append(container).appendTo('body');
+	overlay.append(container).appendTo('#app');
 }

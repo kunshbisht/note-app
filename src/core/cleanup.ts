@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import { saveNote } from './note';
 
-export function cleanup($el: JQuery = $('body')) {
+export function cleanup($el: JQuery = $('#app')) {
 	$el.find('.col:empty').remove();
 	$el.find('.row:empty').remove();
 	$('.row').each(function () {

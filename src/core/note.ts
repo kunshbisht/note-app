@@ -31,7 +31,7 @@ function jq2AST(el: JQuery<HTMLElement> | HTMLElement): ContentType {
 export function saveNote() {
     const title = $('#title').val() as string;
 
-    const content: ContentType[] = $('body')
+    const content: ContentType[] = $('#app')
         .children('input:not(#title), div.row, div.col, img')
         .get().map(jq2AST)
 
