@@ -71,17 +71,32 @@ export function deleteInput(e: JQuery.KeyDownEvent) {
 }
 
 export function onKeyDown(e: JQuery.KeyDownEvent) {
-	const $target = $(e.target)
+	const $target = $(e.target);
+
 	if (e.key === 'Enter') {
+		e.preventDefault();
+
 		const $new = input('', { placeholder: 'Write anything' });
-		if ($target.attr('data-format') === 'list')
-			$new.attr('data-format', 'list')
+		if ($target.attr('data-format') === 'list') $new.attr('data-format', 'list');
+
 		$target.after($new);
 		$new.trigger('focus');
-		saveNote()
-	} else if (e.key === 'ArrowDown') {
-		$target.next().trigger('focus')
-	} else if (e.key === 'ArrowUp') {
-		$target.prev().trigger('focus')
+		saveNote();
+
+	} else if (['ArrowDown', 'ArrowUp'].includes(e.key)) {
+		e.preventDefault();
+
+		const methods: Record<'ArrowUp' | 'ArrowDown', number> = {
+			ArrowUp: -1,
+			ArrowDown: 1,
+		};
+
+		const $allInputs = $('input'); // all inputs in DOM order
+		const index = $allInputs.index($target);
+		const newIndex = index + methods[e.key as 'ArrowUp' | 'ArrowDown'];
+
+		if (newIndex >= 0 && newIndex < $allInputs.length) {
+			$allInputs.eq(newIndex).trigger('focus');
+		}
 	}
 }
