@@ -1,4 +1,4 @@
-import type { Attribute, Line } from "../App";
+import type { Line } from "../App";
 
 type LineProps = {
 	value: Line;
@@ -9,16 +9,20 @@ type LineProps = {
 };
 
 export function Input({ value, index, inputRefs, lines, setLines }: LineProps) {
-	function getAttr(i: number, attr: Attribute) {
+	function getAttr<K extends keyof Line>(i: number, attr: K): Line[K] {
 		return lines[i][attr];
 	}
 
-	function setAttr(i: number, attr: Attribute, value: string) {
+	function setAttr<K extends keyof Line>(
+		i: number,
+		attr: K,
+		value: Line[K]
+	) {
 		setLines(prev => {
 			const next = [...prev];
 			next[i][attr] = value;
 			return next;
-		})
+		});
 	}
 
 	function keyEnterHandler(e: React.KeyboardEvent<HTMLInputElement>, i: number) {
@@ -29,11 +33,12 @@ export function Input({ value, index, inputRefs, lines, setLines }: LineProps) {
 			const left = line.value.slice(0, line.selectionStart!);
 			const right = line.value.slice(line.selectionEnd!);
 			const list = getAttr(i, 'list');
+			const heading = getAttr(i, 'heading');
 
 			setLines(prev => [
 				...prev.slice(0, i),
-				{ text: left, list },
-				{ text: right, list },
+				{ text: left, list, heading },
+				{ text: right, list, heading: 'none' },
 				...prev.slice(i + 1),
 			] as Line[]);
 
@@ -94,7 +99,7 @@ export function Input({ value, index, inputRefs, lines, setLines }: LineProps) {
 			value = value.slice(2);
 		} else if (value.startsWith('= ')) {
 			list = 'none';
-			heading = 'none'
+			heading = 'none';
 			value = value.slice(2);
 		} else if (value.startsWith('! ')) {
 			heading = 'bold';
@@ -110,12 +115,11 @@ export function Input({ value, index, inputRefs, lines, setLines }: LineProps) {
 			value = value.slice(4);
 		}
 
-		setAttr(i, 'list', list);
-		setAttr(i, 'heading', heading);
-
 		setLines(prev => {
 			const next = [...prev];
-			next[i].text = value;
+			next[i] = {
+				...next[i], text: value, list, heading
+			};
 			return next;
 		});
 	}
