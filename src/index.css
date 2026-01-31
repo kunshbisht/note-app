@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+[data-list=list]::before {
+	content: "•";
+	font-weight: bold;
+	margin: 0 10px;
+}
+
+[data-heading] { /* none */
+	@apply text-base font-normal;
+}
+
+[data-heading="h1"] {
+	@apply text-2xl font-extrabold;
+}
+
+[data-heading="h2"] {
+	@apply text-xl font-bold;
+}
+
+[data-heading="h3"] {
+	@apply text-lg font-semibold text-neutral-500;
+}
+
+[data-heading="bold"] {
+	@apply text-base font-bold;
+}
