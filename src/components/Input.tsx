@@ -6,9 +6,10 @@ type LineProps = {
 	inputRefs: React.RefObject<HTMLInputElement[]>;
 	lines: Line[];
 	setLines: React.Dispatch<React.SetStateAction<Line[]>>;
+	setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export function Input({ value, index, inputRefs, lines, setLines }: LineProps) {
+export function Input({ value, index, inputRefs, lines, setLines, setActiveIndex }: LineProps) {
 	function getAttr<K extends keyof Line>(i: number, attr: K): Line[K] {
 		return lines[i][attr];
 	}
@@ -104,15 +105,15 @@ export function Input({ value, index, inputRefs, lines, setLines }: LineProps) {
 		} else if (value.startsWith('! ')) {
 			heading = 'bold';
 			value = value.slice(2);
-		} else if (value.startsWith('# ')) {
-			heading = 'h1';
-			value = value.slice(2);
-		} else if (value.startsWith('## ')) {
-			heading = 'h2';
-			value = value.slice(3);
 		} else if (value.startsWith('### ')) {
 			heading = 'h3';
 			value = value.slice(4);
+		} else if (value.startsWith('## ')) {
+			heading = 'h2';
+			value = value.slice(3);
+		} else if (value.startsWith('# ')) {
+			heading = 'h1';
+			value = value.slice(2);
 		}
 
 		setLines(prev => {
@@ -135,7 +136,7 @@ export function Input({ value, index, inputRefs, lines, setLines }: LineProps) {
 				onKeyDown={e => onKeyDown(e, index)}
 				onChange={e => onChange(e, index)}
 				value={value.text}
-				autoFocus
+				onFocus={() => setActiveIndex(index)}
 			/>
 		</div>
 	);
