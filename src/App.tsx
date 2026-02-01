@@ -34,7 +34,7 @@ export default function App() {
 	}, [activeIndex])
 
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col h-screen">
 			<div className="flex bg-blue-500 p-4 gap-4">
 				<IconButton lastActiveIndex={activeIndex} setLines={setLines} icon={faT} patch={{ list: "none", heading: "none" }} />
 				<IconButton lastActiveIndex={activeIndex} setLines={setLines} icon={faHeading} icon2={fa1} patch={{ list: "none", heading: "h1" }} />
@@ -43,7 +43,7 @@ export default function App() {
 				<IconButton lastActiveIndex={activeIndex} setLines={setLines} icon={faBold} patch={{ heading: "bold" }} />
 				<IconButton lastActiveIndex={activeIndex} setLines={setLines} icon={faList} patch={{ list: "list", heading: "none" }} />
 			</div>
-			<div className="m-4 flex flex-col gap-2">
+			<div className="p-8 mx-auto box-border w-full md:w-3xl shadow-lg flex flex-1 flex-col gap-2">
 				{lines.map((val, i) => (
 					<Input
 						key={i}
