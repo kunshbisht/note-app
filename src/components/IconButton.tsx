@@ -1,5 +1,5 @@
 import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import type { Line } from "./App";
+import type { Line } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type IconButtonProps = {
