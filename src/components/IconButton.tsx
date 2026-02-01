@@ -1,30 +1,18 @@
 import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import type { Line } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type React from "react";
 
 type IconButtonProps = {
-	lastActiveIndex: number;
-	setLines: React.Dispatch<React.SetStateAction<Line[]>>;
+	onClick?: React.MouseEventHandler;
+	children?: React.ReactNode;
 	icon: IconDefinition;
 	icon2?: IconDefinition;
-	patch: Partial<Line>;
 };
 
-export function IconButton({ lastActiveIndex, setLines, icon, icon2, patch }: IconButtonProps) {
+export function IconButton({ onClick, icon, icon2 }: IconButtonProps) {
 	return <button
-		className="bg-blue-50 text-black rounded-lg flex w-10 h-10 items-center justify-center
-			cursor-pointer hover:bg-blue-100 active:bg-blue-200 transition-colors"
-		onClick={() => {
-			setLines(prev => {
-				if (!prev[lastActiveIndex]) return prev;
-				const next = [...prev];
-				next[lastActiveIndex] = {
-					...next[lastActiveIndex],
-					...patch
-				};
-				return next;
-			});
-		}}
+		className="text-black rounded-lg flex cursor-pointer w-10 h-10 items-center justify-center bg-blue-50 hover:bg-blue-100 active:bg-blue-200 transition-colors"
+		onClick={onClick}
 	>
 		<FontAwesomeIcon icon={icon} />
 		{icon2 && <FontAwesomeIcon
@@ -32,5 +20,5 @@ export function IconButton({ lastActiveIndex, setLines, icon, icon2, patch }: Ic
 			className="absolute"
 			transform="shrink-8 right-11 down-8"
 		/>}
-	</button>
+	</button>;
 }
