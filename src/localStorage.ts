@@ -1,4 +1,5 @@
 import type { Line } from "./App";
+import type { Metadata } from "./MetadataSection";
 
 const NOTE_KEY = 'note';
 
@@ -14,5 +15,22 @@ export function loadNote(): Line[] {
 		return JSON.parse(raw);
 	} catch {
 		return [{ text: '', list: 'none', heading: 'none' }];
+	}
+}
+
+const METADATA_KEY = 'md';
+
+export function saveMetadata(metadata: object) {
+	localStorage.setItem(METADATA_KEY, JSON.stringify(metadata));
+}
+
+export function loadMetadata(): Metadata {
+	const raw = localStorage.getItem(METADATA_KEY);
+	if (!raw) return { title: "", thumbnailUrl: "" };
+
+	try {
+		return JSON.parse(raw);
+	} catch {
+		return { title: "", thumbnailUrl: "" };
 	}
 }

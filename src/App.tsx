@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { Input } from "./components/Input";
 import { loadNote, saveNote } from "./localStorage";
-import { fa1, fa2, fa3, faBold, faHeading, faList, faPencil, faPenRuler, faPenToSquare, faT, type IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { fa1, fa2, fa3, faBold, faHeading, faList, faPenToSquare, faT, type IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { IconButton } from "./components/IconButton";
+import { faFileLines } from "@fortawesome/free-regular-svg-icons";
+import { MetadataSection } from "./MetadataSection";
 
 export type ListType = 'list' | 'none';
 export type HeadingType = 'none' | 'h1' | 'h2' | 'h3' | 'bold';
@@ -38,44 +40,53 @@ export default function App() {
 		saveNote(lines);
 	}, [lines]);
 
-	useEffect(() => {
-		console.log(activeIndex);
-	}, [activeIndex])
-
 	return (
 		<div className="flex flex-col h-screen bg-blue-50">
 			<div className="flex justify-center bg-blue-500 p-4 gap-2">
 				<IconButton
-					onClick={() => {}}
-					icon={faPenToSquare}
+					onClick={() => {
+						setActiveIndex(activeIndex === -1 ? lines.length - 1 : -1);
+					}}
+					icon={activeIndex === -1 ? faFileLines : faPenToSquare}
+					key={-1}
 				/>
-				{navButtons.map(navButton => <IconButton
+				{navButtons.map((navButton, i) => <IconButton
+					key={i}
 					onClick={() => {
 						setLines(prev => {
 							const next = [...prev];
-							next[activeIndex] = {
-								...next[activeIndex],
-								...navButton.patch
+							try {
+								next[activeIndex] = {
+									...next[activeIndex],
+									...navButton.patch
+								}
+								return next;
+							} catch {
+								return prev;
 							}
-							return next
 						})
 					}}
+					disabled={activeIndex === -1}
 					icon={navButton.icon}
 					icon2={navButton.icon2}
 				/>)}
 			</div>
 			<div className="p-8 mx-auto mt-8 box-border w-full bg-white md:w-3xl shadow-[0_0_15px_#0002] flex flex-1 flex-col gap-2">
-				{lines.map((val, i) => (
-					<Input
-						key={i}
-						value={val}
-						index={i}
-						inputRefs={inputRefs}
-						lines={lines}
-						setLines={setLines}
-						setActiveIndex={setActiveIndex}
-					/>
-				))}
+				{
+					activeIndex === -1
+						? <MetadataSection />
+						: lines.map((val, i) => (
+							<Input
+								key={i}
+								value={val}
+								index={i}
+								inputRefs={inputRefs}
+								lines={lines}
+								setLines={setLines}
+								setActiveIndex={setActiveIndex}
+							/>
+						))
+				}
 			</div>
 		</div>
 	);
