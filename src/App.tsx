@@ -41,7 +41,7 @@ export default function App() {
 	}, [lines]);
 
 	return (
-		<div className="flex flex-col h-screen bg-blue-50">
+		<div className="flex flex-col h-screen">
 			<div className="flex justify-center bg-blue-500 p-4 gap-2">
 				<IconButton
 					onClick={() => {
@@ -71,7 +71,7 @@ export default function App() {
 					icon2={navButton.icon2}
 				/>)}
 			</div>
-			<div className="p-8 mx-auto mt-8 box-border w-full bg-white md:w-3xl shadow-[0_0_15px_#0002] flex flex-1 flex-col gap-2">
+			<div className="p-8 mx-auto mt-8 box-border w-full bg-white md:w-3xl shadow-[0_0_15px_#0002] flex flex-1 flex-col gap-2 overflow-scroll">
 				{
 					activeIndex === -1
 						? <MetadataSection />

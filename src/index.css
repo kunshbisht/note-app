@@ -25,3 +25,7 @@
 [data-heading="bold"] {
 	@apply text-base font-bold;
 }
+
+body {
+	@apply bg-blue-50 overflow-hidden;
+}
