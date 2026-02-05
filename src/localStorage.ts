@@ -26,11 +26,11 @@ export function saveMetadata(metadata: object) {
 
 export function loadMetadata(): Metadata {
 	const raw = localStorage.getItem(METADATA_KEY);
-	if (!raw) return { title: "", thumbnailUrl: "" };
+	if (!raw) return { title: "", thumbnailUrl: "", mainIdea: "" };
 
 	try {
 		return JSON.parse(raw);
 	} catch {
-		return { title: "", thumbnailUrl: "" };
+		return { title: "", thumbnailUrl: "", mainIdea: "" };
 	}
 }
