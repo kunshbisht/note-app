@@ -20,7 +20,7 @@ export function loadNote(): Line[] {
 
 const METADATA_KEY = 'md';
 
-export function saveMetadata(metadata: object) {
+export function saveMetadata(metadata: Metadata) {
 	localStorage.setItem(METADATA_KEY, JSON.stringify(metadata));
 }
 

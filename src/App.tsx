@@ -28,7 +28,7 @@ export default function App() {
 	const [lines, setLines] = useState<Line[]>([
 		{ text: '', list: 'list', heading: 'none' }
 	]);
-	const inputRefs = useRef<HTMLInputElement[]>([]);
+	const inputRefs = useRef<HTMLTextAreaElement[]>([]);
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	useEffect(() => {
