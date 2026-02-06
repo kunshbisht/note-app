@@ -11,7 +11,7 @@
 }
 
 [data-heading="h1"] {
-	@apply text-2xl font-extrabold;
+	@apply text-3xl font-extrabold;
 }
 
 [data-heading="h2"] {
@@ -19,7 +19,7 @@
 }
 
 [data-heading="h3"] {
-	@apply text-lg font-semibold text-neutral-500;
+	@apply text-lg font-semibold text-neutral-600;
 }
 
 [data-heading="bold"] {

@@ -9,16 +9,18 @@ type IconButtonProps = {
 	icon: IconDefinition;
 	icon2?: IconDefinition;
 	disabled?: boolean;
+	active?: boolean;
 };
 
-export function IconButton({ onClick, icon, icon2, disabled = false }: IconButtonProps) {
+export function IconButton({ onClick, icon, icon2, disabled = false, active = false }: IconButtonProps) {
 	return <button
 		className={clsx(
-			"rounded-lg flex w-10 h-10 items-center justify-center",
-			"bg-blue-50 hover:bg-blue-100 active:bg-blue-200 transition-colors",
-			disabled ? "text-gray-500 cursor-not-allowed" : "text-black cursor-pointer"
+			"rounded-lg flex w-10 h-10 items-center justify-center transition-colors border-2",
+			disabled ? "text-gray-500 cursor-not-allowed" : "text-black cursor-pointer",
+			active && "bg-blue-600 border-white text-white",
+			!active && "bg-blue-50 border-blue-50 hover:bg-blue-100 active:bg-blue-200",
 		)}
-		onClick={onClick}
+		onClick={e => {if (!disabled) onClick?.(e);}}
 	>
 		<FontAwesomeIcon icon={icon} />
 		{icon2 && <FontAwesomeIcon
